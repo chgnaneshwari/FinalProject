@@ -47,4 +47,6 @@ Launch the application by running the following command:
 
 Python app.py
 
+Video link:https://vimeo.com/1079027879?share=copy
+
 
