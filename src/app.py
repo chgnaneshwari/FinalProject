@@ -310,4 +310,4 @@ def logout():
 if __name__ == "__main__":
     with app.app_context():  # Creating an application context
         db.create_all()  # This will now work within the context
-    app.run(debug=True)
+    app.run(debug=True) 
