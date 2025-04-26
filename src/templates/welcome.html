@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to EatSmart</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='images/health_bg.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #ffcc00;
+            margin: 0 0 15px;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-top: 15px;
+            line-height: 1.7;
+            font-weight: 300;
+            text-align: justify;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #007b5e;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 25px;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #005b44;
+            transform: scale(1.05);
+        }
+
+        .header p:last-of-type {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Welcome to EatSmart</h1>
+        <p>EatSmart serves as your trusted partner in achieving optimal health and wellness. Our platform provides personalized tools for tracking calories, managing nutrition, and meeting your health objectives. Whether you're aiming for weight management, muscle gain, or enhancing overall well-being, EatSmart delivers data-driven insights tailored to your individual needs.</p>
+        <p>Embark on your health journey with EatSmart today and make informed decisions that align with your goals.</p>
+        <a href="{{ url_for('register') }}" class="btn">Get Started</a>
+    </div>
+
+</body>
+</html>
