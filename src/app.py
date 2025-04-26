@@ -270,44 +270,30 @@ def food_search():
 @app.route("/meal_prep", methods=["GET", "POST"])
 def meal_prep():
     if "user_id" not in session:
-        flash("You must be logged in to access this page.", "warning")
+        flash("You must be logged in to access the meal prep.", "warning")
         return redirect(url_for("login"))
 
     user_id = session["user_id"]
-    
+    grocery_list = GroceryList.query.filter_by(user_id=user_id).first()
+
     if request.method == "POST":
-        ingredients = request.form.get("ingredients")
-        
-        # Ensure ingredients are not empty
-        if not ingredients:
-            flash("Please enter ingredients.", "warning")
+        action = request.form.get("action")
+
+        # Add new grocery list or update existing one
+        if action == "update_grocery_list":
+            ingredients = request.form.get("ingredients")
+            if grocery_list:
+                grocery_list.ingredients = ingredients
+            else:
+                grocery_list = GroceryList(user_id=user_id, ingredients=ingredients)
+                db.session.add(grocery_list)
+            db.session.commit()
+            flash("Grocery list updated successfully!", "success")
             return redirect(url_for("meal_prep"))
-        
-        # Add ingredients to the grocery list
-        grocery_list = GroceryList(user_id=user_id, ingredients=ingredients)
-        db.session.add(grocery_list)
-        db.session.commit()
 
-        flash("Your grocery list has been created.", "success")
-        return redirect(url_for("meal_prep"))
+    return render_template("meal_prep.html", grocery_list=grocery_list)
 
-    # Retrieve the grocery list for the logged-in user
-    grocery_list = GroceryList.query.filter_by(user_id=user_id).all()
-    
-    # Extract only the ingredients from the grocery list
-    ingredients_list = [item.ingredients for item in grocery_list]
-    
-    return render_template("meal_prep.html", grocery_list=ingredients_list)
-
-# Route for logging out the user
-@app.route("/logout", methods=["GET", "POST"])
-def logout():
-    session.pop("user_id", None)
-    flash("Logged out successfully!", "success")
-    return redirect(url_for("welcome"))
-
-# Main entry point for the Flask app
+# Run the Flask application
 if __name__ == "__main__":
-    with app.app_context():  # Creating an application context
-        db.create_all()  # This will now work within the context
+    db.create_all()  # Create database tables if they don't exist
     app.run(debug=True)
