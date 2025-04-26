@@ -108,6 +108,7 @@ def pie_chart(user_id):
     img_base64 = create_pie_chart(user_id)
     return render_template("pie_chart.html", pie_chart_img=img_base64)
 
+# Route for user registration
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -115,10 +116,12 @@ def register():
         email = request.form.get("email")
         password = generate_password_hash(request.form.get("password"), method='pbkdf2:sha256')
 
+        # Check if the email already exists in the database
         if User.query.filter_by(email=email).first():
             flash("Email already registered!", "danger")
             return redirect(url_for("register"))
 
+        # Create a new user and add it to the database
         new_user = User(username=username, email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
@@ -126,11 +129,13 @@ def register():
         return redirect(url_for("login"))
     return render_template("register.html")
 
+# Route for user login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         action = request.form.get("action")
 
+        # If the action is login, authenticate the user
         if action == "login":
             email = request.form.get("email")
             password = request.form.get("password")
@@ -143,11 +148,13 @@ def login():
             else:
                 flash("Invalid credentials, please try again.", "danger")
 
+        # If the action is register, create a new user
         elif action == "register":
             username = request.form.get("username")
             email = request.form.get("email")
             password = generate_password_hash(request.form.get("password"), method='pbkdf2:sha256')
 
+            # Check if the email already exists in the database
             if User.query.filter_by(email=email).first():
                 flash("Email already registered!", "danger")
                 return redirect(url_for("login"))
@@ -160,6 +167,7 @@ def login():
 
     return render_template("register.html")
 
+# Route for user dashboard where they can see their meals, hydration, and set goals
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     if "user_id" not in session:
@@ -171,10 +179,10 @@ def dashboard():
     meals = Meal.query.filter_by(user_id=user_id).order_by(Meal.date.desc()).all()
 
     total_calories = sum(meal.calories for meal in meals)
-    # Set default daily goal to 2000
+    # Set default daily goal to 2000 calories
     recommended_calories = 2000
 
-    # Hydration
+    # Hydration logic: calculating total water intake
     hydration_logs = Hydration.query.filter_by(user_id=user_id, date=datetime.date.today()).all()
     total_water_intake = sum(log.water_intake for log in hydration_logs) if hydration_logs else 0.0
 
@@ -194,6 +202,7 @@ def dashboard():
     if request.method == "POST":
         action = request.form.get("action")
 
+        # If user wants to update their goal
         if action == "update_goal":
             new_goal = request.form.get("goal")
             user.goal = new_goal
@@ -201,6 +210,7 @@ def dashboard():
             flash(f"Your goal has been updated to {new_goal}.", "success")
             return redirect(url_for("dashboard"))
 
+        # If user logs a meal
         elif action == "log_meal":
             food_item = request.form.get("food_item")
             calories = get_calories_from_csv(food_item)
@@ -225,6 +235,8 @@ def dashboard():
             return redirect(url_for("dashboard"))
 
     return render_template("dashboard.html", user=user, meals=meals, total_calories=total_calories, recommended_calories=recommended_calories,  total_water_intake=total_water_intake, hydration_logs=hydration_logs)
+
+# Route to clear all meals for the user
 @app.route("/clear_meals", methods=["POST"])
 def clear_meals():
     Meal.query.filter_by(user_id=session["user_id"]).delete()
@@ -232,7 +244,7 @@ def clear_meals():
     flash("All meals have been cleared.", "success")
     return redirect(url_for("dashboard"))
 
-
+# Route for food search where users can look up the calorie content of food items
 @app.route("/food_search", methods=["GET", "POST"])
 def food_search():
     search_result = None
@@ -253,6 +265,8 @@ def food_search():
             flash("Food item not found in the database.", "danger")
     
     return render_template("food_search.html", search_result=search_result)
+
+# Route for meal preparation where users can add ingredients to a grocery list
 @app.route("/meal_prep", methods=["GET", "POST"])
 def meal_prep():
     if "user_id" not in session:
@@ -285,17 +299,14 @@ def meal_prep():
     
     return render_template("meal_prep.html", grocery_list=ingredients_list)
 
-
-
+# Route for logging out the user
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
     session.pop("user_id", None)
     flash("Logged out successfully!", "success")
     return redirect(url_for("welcome"))
 
-
-
-
+# Main entry point for the Flask app
 if __name__ == "__main__":
     with app.app_context():  # Creating an application context
         db.create_all()  # This will now work within the context
