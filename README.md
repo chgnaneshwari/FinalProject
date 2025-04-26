@@ -28,7 +28,25 @@ step2:Clone the Repository from GitHub
 
 Open your terminal (or Command Prompt) and clone the repository with this command:
 
+git clone https://github.com/chgnaneshwari/FinalProject
+
+Navigate to the project directory:
+
+cd FinalProject
+
+Then, go to the src folder:
+
+cd src
 
 
-step3:
+step3:Install the Required Dependencies
+
+pip install -r requirements.txt
+
+step4:Run the Application
+
+Launch the application by running the following command:
+
+Python app.py
+
 
