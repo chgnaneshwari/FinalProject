@@ -1,5 +1,5 @@
 Project Name:
-EatSmart - Calorie Tracking and Nutritional Insights
+EatSmart:Personalized Diet and Hydration Management
 
 Description:
 EatSmart is a web application designed to help users manage their daily nutrition and wellness goals. It provides an intuitive platform for tracking food intake, hydration. The application allows users to log their meals, monitor calorie consumption, and categorize food items based on their type. Users can also track their daily water intake and create grocery lists to assist with meal planning. With features such as goal setting for weight management (including weight loss, maintenance, and weight gain) and personalized calorie recommendations, EatSmart aims to provide users with actionable insights to make informed decisions about their diet and overall health. Additionally, the app generates a pie chart to visualize meal distribution across different categories, offering a clear view of eating patterns. Whether users want to improve their dite or maintain a balanced diet, EatSmart empowers them to take control of their health in an easy-to-use, accessible format.
