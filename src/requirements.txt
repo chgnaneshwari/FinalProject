@@ -1,8 +1,0 @@
-pip install Flask
-pip install Flask-SQLAlchemy
-pip install Werkzeug
-pip install Flask-Session
-pip install Jinja2
-pip install Flask-WTF
-pip install python-dotenv
-pip install pandas
