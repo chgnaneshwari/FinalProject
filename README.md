@@ -16,3 +16,19 @@ EatSmart utilizes a variety of technologies to build a robust and user-friendly 
 On the frontend, HTML and CSS are used to create the user interface, while Jinja2 templates allow for dynamic content rendering. Flask-Session is used for managing user sessions, enabling users to log in and track their progress across multiple sessions. To provide a smooth user experience, flash messages are implemented to notify users of successes, warnings, or errors during interactions with the app. These technologies work together to create a seamless and efficient web application for calorie tracking and nutritional insights.
 
 Setup Instructions:
+step1:Install Python 3.7 or Higher
+
+Ensure that Python 3.7 or later is installed on your system. You can download it from the official website: Python Downloads.
+
+To verify the Python installation, run the following command:
+
+python --version
+
+step2:Clone the Repository from GitHub
+
+Open your terminal (or Command Prompt) and clone the repository with this command:
+
+
+
+step3:
+
