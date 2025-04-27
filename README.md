@@ -47,7 +47,7 @@ Launch the application by running the following command:
 
 Python app.py
 
-please do select the food names as per the food_calories.csv file 
+please do select the food names as per the food_calories.csv file which is present in src folder
 
 Video link:https://vimeo.com/1079027879?share=copy
 
